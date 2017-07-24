@@ -6,8 +6,8 @@ export class User {
     userId: number;
     userName: string;
     picture: string;
-
     notifications: Notification[] = [];
+    conversations: Conversation[] = [];
 }
 
 export class Notification {
@@ -18,5 +18,21 @@ export class Notification {
     notificationId
     type: number;
     read: boolean;
-    // craeted: Date
+}
+
+export class Conversation {
+    constructor(init?: Partial<Conversation>) {
+        Object.assign(this, init);
+    }
+
+    conversationId: number;
+    messages: Message[] = [];
+}
+
+export class Message {
+    constructor(init?: Partial<Message>) {
+        Object.assign(this, init);
+    }
+    messageId: number;
+    content: string;
 }

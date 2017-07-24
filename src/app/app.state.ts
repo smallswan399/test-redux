@@ -1,5 +1,5 @@
 import { User } from "app/user";
-import { Notification } from "./user";
+import { Notification, Conversation, Message } from "./user";
 
 export interface IAppState {
     user: User;
@@ -8,6 +8,16 @@ export interface IAppState {
 export const INITIAL_STATE: IAppState = {
     user: new User({
         notifications: [],
+        conversations: [
+            new Conversation({
+                conversationId: 1,
+                messages: []
+            }),
+            new Conversation({
+                conversationId: 1,
+                messages: []
+            })
+        ],
         picture: '',
         userId: 1,
         userName: 'test'
@@ -36,17 +46,26 @@ export function rootReducer(state: IAppState, action): IAppState {
             newState.user.notifications = notifications;
             return newState;
 
-
-            // return state;
-            // let notifications = Object.assign({}, state.user.notifications);
-            
-            // return Object.assign({}, {
-            //     ...state,
-            //     user: Object.assign({}, {
-            //         ...state.user,
-            //         notifications: notifications
-            //     })
-            // });
+        case "message1":
+            debugger;
+            let messages1 = Object.assign([], state.user.conversations[0].messages);
+            messages1.push(new Message({
+                content: 'message 1 content',
+                messageId: 111
+            }));
+            newState = Object.assign({}, state);
+            newState.user.conversations[0].messages = messages1;
+            return newState;
+        case "message2":
+            debugger;
+            let messages2 = Object.assign([], state.user.conversations[1].messages);
+            messages2.push(new Message({
+                content: 'message 2 content',
+                messageId: 222
+            }));
+            newState = Object.assign({}, state);
+            newState.user.conversations[1].messages = messages2;
+            return newState;
         default:
             return state;
     }
