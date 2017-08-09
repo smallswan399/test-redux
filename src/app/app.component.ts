@@ -4,6 +4,8 @@ import { Observable } from "rxjs/Observable";
 import { IAppState } from "app/app.state";
 import { NgRedux, select } from "@angular-redux/store";
 import "rxjs/add/operator/takeUntil";
+import "rxjs/add/operator/toPromise";
+import "rxjs/add/operator/take";
 import { Subject } from "rxjs/Subject";
 
 @Component({
@@ -13,10 +15,14 @@ import { Subject } from "rxjs/Subject";
 })
 export class AppComponent implements OnInit {
   private unSub: Subject<void> = new Subject<void>();
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     debugger;
+    let aaa = await this.user$.take(1).toPromise();
+      alert(JSON.stringify(aaa));
     this.user$.takeUntil(this.unSub).subscribe(s => {
       alert("user changed");
+
+      
     });
     this.notification$.takeUntil(this.unSub).subscribe(s => {
       alert('Notification changed');
@@ -30,7 +36,7 @@ export class AppComponent implements OnInit {
   }
   title = 'app';
   // user: User = new User();
-  @select() user$;
+  @select() user$: Observable<User>;
   @select(['user', 'notifications']) notification$;
   @select((state: IAppState) => state.user.conversations[0].messages) messageList1$: Observable<Message[]>;
   @select((state: IAppState) => state.user.conversations[1].messages) messageList2$: Observable<Message[]>;

@@ -3,36 +3,20 @@ export class User {
         Object.assign(this, init);
     }
 
-    userId: number;
-    userName: string;
+    id: number;
+    username: string;
+    password: string;
     picture: string;
-    notifications: Notification[] = [];
-    conversations: Conversation[] = [];
 }
 
-export class Notification {
-    constructor(init?: Partial<Notification>) {
+export class Post {
+    constructor(init?: Partial<Post>) {
         Object.assign(this, init);
     }
 
-    notificationId
-    type: number;
-    read: boolean;
-}
-
-export class Conversation {
-    constructor(init?: Partial<Conversation>) {
-        Object.assign(this, init);
-    }
-
-    conversationId: number;
-    messages: Message[] = [];
-}
-
-export class Message {
-    constructor(init?: Partial<Message>) {
-        Object.assign(this, init);
-    }
-    messageId: number;
+    id: number;
+    userId: number;
+    title: string;
     content: string;
+    created: Date;
 }
