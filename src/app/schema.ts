@@ -1,10 +1,10 @@
 import { normalize, schema, Schema } from 'normalizr';
 
 // Define your comments schema
-export const post = new schema.Entity('post');
+export const post = new schema.Entity('posts');
 
 // Define a users schema
-export const user = new schema.Entity('user', {
+export const user = new schema.Entity('users', {
     posts: [post]
 });
 

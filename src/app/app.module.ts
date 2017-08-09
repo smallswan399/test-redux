@@ -6,17 +6,22 @@ import { IAppState, INITIAL_STATE, rootReducer } from "app/app.state";
 import { createLogger } from 'redux-logger';
 import { MyServiceService } from "app/my-service.service";
 import { HttpModule } from "@angular/http";
+import { UserQueryService } from "app/users-query.service";
+import { PostsComponent } from './posts/posts.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     NgReduxModule
   ],
-  providers: [MyServiceService],
+  providers: [MyServiceService,
+    UserQueryService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

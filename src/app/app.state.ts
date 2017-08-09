@@ -27,6 +27,17 @@ const posts = (state = {}, action) => {
     }
 };
 
+
+// export class ReduxEntity<T>{
+//     id: number;
+//     entity: T;
+// }
+
+// class ReduxTable<T>{
+//     ids: number[],
+//     entities
+// }
+
 export interface IAppState {
     entities: {
         users: any;
@@ -36,8 +47,14 @@ export interface IAppState {
 
 export const INITIAL_STATE: IAppState = {
     entities: {
-        users: {},
-        posts: {}
+        users: {
+            ids: [],
+            users: {}
+        },
+        posts: {
+            ids: [],
+            posts: {}
+        }
     },
 };
 

@@ -1,13 +1,43 @@
-<div>
-    <button type="button" (click)="getUser()">Get User</button>
-    <textarea rows="4" cols="">
-        {{user}}
-    </textarea>
-</div>
+dd
 
-<div>
-    <button type="button" (click)="getUsers()">Get Users</button>
-    <textarea rows="4" cols="">
-        {{users}}
-    </textarea>
-</div>
+<!-- <table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>name</th>
+            <th>picture</th>
+            <th>posts</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of (usersWithPosts$ | async)">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.picture}}</td>
+            <td>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>PostId</th>
+                            <th>Title</th>
+                            <th>Change title</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let post of item.posts">
+                            <td>{{post.id}}</td>
+                            <td>{{post.title}}</td>
+                            <td><button type="button" (click)="changeTitle(post)">Change title</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table> -->
+
+<!-- <div *ngFor="let post of (posts$ | async)">
+    this is a test
+</div> -->
+
+<!-- <app-posts></app-posts> -->

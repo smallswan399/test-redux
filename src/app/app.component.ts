@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from "app/user";
+import { User, Post } from "app/user";
 import { Observable } from "rxjs/Observable";
 import { IAppState } from "app/app.state";
 import { NgRedux, select } from "@angular-redux/store";
@@ -9,6 +9,7 @@ import "rxjs/add/operator/take";
 import { Subject } from "rxjs/Subject";
 import { MyServiceService } from "app/my-service.service";
 import { normalizeUser, normalizeUsers } from "app/schema";
+import { UserQueryService } from "app/users-query.service";
 
 @Component({
   selector: 'app-root',
@@ -21,32 +22,34 @@ export class AppComponent implements OnInit {
   user: string;
   users: string;
 
-  @select((state: IAppState) => state.entities.users.map(s => s)) users$: Observable<User[]>;
-  constructor(private myService: MyServiceService, private ngRedux: NgRedux<IAppState>) {
+  // users$: Observable<User[]>;
+  // usersWithPosts$: Observable<User[]>;
+  // posts$: Observable<Post[]>;
+
+  constructor(private myService: MyServiceService,
+    private userQueryService: UserQueryService,
+    private ngRedux: NgRedux<IAppState>) {
   }
 
   ngOnInit(): void {
-    
-  }
+    // this.posts$ = this.userQueryService.getPosts();
+    // this.users$ = this.userQueryService.getUsers();
+    // this.usersWithPosts$ = this.userQueryService.getUsersWithPosts();
 
-  getUser(){
-    this.myService.getUser().take(1).subscribe(s => {
-      this.user = JSON.stringify(normalizeUser(s));
-    });
-  }
-
-  getUsers(){
     this.myService.getUsers().take(1).subscribe(s => {
       let normalizedData = normalizeUsers(s);
-      let users = normalizedData.entities.user;
-      let posts = normalizedData.entities.post;
-      debugger;
-      this.ngRedux.dispatch({type: 'ADD_USERS', payload: {users: users, ids: normalizedData.result}});
-      this.ngRedux.dispatch({type: 'ADD_POSTS', payload: {posts: posts, ids: Object.keys(posts).map(s => +s)}});
-
-      debugger;
-
+      let users = normalizedData.entities.users;
+      let posts = normalizedData.entities.posts;
+      this.ngRedux.dispatch({ type: 'ADD_USERS', payload: { users: users, ids: normalizedData.result } });
+      this.ngRedux.dispatch({ type: 'ADD_POSTS', payload: { posts: posts, ids: Object.keys(posts).map(s => +s) } });
       this.users = JSON.stringify(normalizedData);
+
+      // this.users$ = this.userQueryService.getUsers();
+      // this.usersWithPosts$ = this.userQueryService.getUsersWithPosts();
     });
   }
+  changeTitle(post) {
+    alert(post.id);
+  }
+  // getUserWithPost()
 }
