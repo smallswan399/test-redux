@@ -1,45 +1,52 @@
 import { User } from "app/user";
 import { Post } from "./user";
+import * as _ from "lodash";
 
 
 
-const users = (state = [], action) => {
-    switch(action.type){
+export const users = (state, action) => {
+    switch (action.type) {
+        case 'ADD_USERS':
+            debugger;
+            return _.merge({}, state, action.payload);
         case 'ADD_USER':
-            return [
-                ...state,
-                action.payload
-            ];
+            return _.merge({}, state, action.payload);
         default:
             return state;
     }
 };
 
-const posts = (state = [], action) => {
-    switch(action.type){
+const posts = (state = {}, action) => {
+    switch (action.type) {
+        case 'ADD_POSTS':
+            return _.merge({}, state, action.payload);
         case 'ADD_POST':
-            return [
-                ...state,
-                action.payload
-            ];
+            return _.merge({}, state, action.payload);
         default:
             return state;
     }
 };
 
 export interface IAppState {
-    users: User[];
-    posts: Post[];
+    entities: {
+        users: any;
+        posts: any;
+    }
 }
 
 export const INITIAL_STATE: IAppState = {
-    users: [],
-    posts: []
+    entities: {
+        users: {},
+        posts: {}
+    },
 };
 
 export function rootReducer(state: IAppState, action): IAppState {
     return {
-        users: users(state.users, action),
-        posts: posts(state.posts, action)
+        entities: {
+            users: users(state.entities.users, action),
+            posts: posts(state.entities.posts, action)
+        }
+        
     }
 }

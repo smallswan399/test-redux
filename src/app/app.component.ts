@@ -20,6 +20,8 @@ export class AppComponent implements OnInit {
   title = 'app';
   user: string;
   users: string;
+
+  @select((state: IAppState) => state.entities.users.map(s => s)) users$: Observable<User[]>;
   constructor(private myService: MyServiceService, private ngRedux: NgRedux<IAppState>) {
   }
 
@@ -35,7 +37,16 @@ export class AppComponent implements OnInit {
 
   getUsers(){
     this.myService.getUsers().take(1).subscribe(s => {
-      this.users = JSON.stringify(normalizeUsers(s));
+      let normalizedData = normalizeUsers(s);
+      let users = normalizedData.entities.user;
+      let posts = normalizedData.entities.post;
+      debugger;
+      this.ngRedux.dispatch({type: 'ADD_USERS', payload: {users: users, ids: normalizedData.result}});
+      this.ngRedux.dispatch({type: 'ADD_POSTS', payload: {posts: posts, ids: Object.keys(posts).map(s => +s)}});
+
+      debugger;
+
+      this.users = JSON.stringify(normalizedData);
     });
   }
 }
