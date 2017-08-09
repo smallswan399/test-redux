@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User, Message } from "app/user";
+import { User } from "app/user";
 import { Observable } from "rxjs/Observable";
 import { IAppState } from "app/app.state";
 import { NgRedux, select } from "@angular-redux/store";
@@ -7,6 +7,8 @@ import "rxjs/add/operator/takeUntil";
 import "rxjs/add/operator/toPromise";
 import "rxjs/add/operator/take";
 import { Subject } from "rxjs/Subject";
+import { MyServiceService } from "app/my-service.service";
+import { normalizeUser, normalizeUsers } from "app/schema";
 
 @Component({
   selector: 'app-root',
@@ -15,54 +17,25 @@ import { Subject } from "rxjs/Subject";
 })
 export class AppComponent implements OnInit {
   private unSub: Subject<void> = new Subject<void>();
-  async ngOnInit(): Promise<void> {
-    debugger;
-    let aaa = await this.user$.take(1).toPromise();
-      alert(JSON.stringify(aaa));
-    this.user$.takeUntil(this.unSub).subscribe(s => {
-      alert("user changed");
-
-      
-    });
-    this.notification$.takeUntil(this.unSub).subscribe(s => {
-      alert('Notification changed');
-    });
-    this.messageList1$.takeUntil(this.unSub).subscribe(s => {
-      alert('Message List 1 changed');
-    });
-    this.messageList2$.takeUntil(this.unSub).subscribe(s => {
-      alert('Message List 2 changed');
-    });
-  }
   title = 'app';
-  // user: User = new User();
-  @select() user$: Observable<User>;
-  @select(['user', 'notifications']) notification$;
-  @select((state: IAppState) => state.user.conversations[0].messages) messageList1$: Observable<Message[]>;
-  @select((state: IAppState) => state.user.conversations[1].messages) messageList2$: Observable<Message[]>;
-  /**
-   *
-   */
-  constructor(private ngRedux: NgRedux<IAppState>) {
-    // this.user$ = this.ngRedux.select<User>("user");
+  user: string;
+  users: string;
+  constructor(private myService: MyServiceService, private ngRedux: NgRedux<IAppState>) {
   }
 
-  userCall(){
-    this.ngRedux.dispatch({type: 'user'});
+  ngOnInit(): void {
+    
   }
 
-  notificationCall(){
-    this.ngRedux.dispatch({type: 'notification'});
+  getUser(){
+    this.myService.getUser().take(1).subscribe(s => {
+      this.user = JSON.stringify(normalizeUser(s));
+    });
   }
 
-
-  message1Call(){
-    debugger;
-    this.ngRedux.dispatch({type: 'message1'});
-  }
-
-  message2Call(){
-    debugger;
-    this.ngRedux.dispatch({type: 'message2'});
+  getUsers(){
+    this.myService.getUsers().take(1).subscribe(s => {
+      this.users = JSON.stringify(normalizeUsers(s));
+    });
   }
 }
