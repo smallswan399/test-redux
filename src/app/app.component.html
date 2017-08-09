@@ -18,6 +18,8 @@
                         <tr>
                             <th>PostId</th>
                             <th>Title</th>
+                            <th>Content</th>
+                            <th>Created</th>
                             <th>Change title</th>
                         </tr>
                     </thead>
@@ -25,6 +27,8 @@
                         <tr *ngFor="let post of item.posts">
                             <td>{{post.id}}</td>
                             <td>{{post.title}}</td>
+                            <td>{{post.content}}</td>
+                            <td>{{post.created | date:'medium'}}</td>
                             <td><button type="button" (click)="changeTitle(post)">Change title</button></td>
                         </tr>
                     </tbody>
@@ -34,8 +38,4 @@
     </tbody>
 </table> 
 
-<!-- <div *ngFor="let post of (posts$ | async)">
-    this is a test
-</div> -->
-
-<!-- <app-posts></app-posts> -->
+ <app-posts></app-posts> 

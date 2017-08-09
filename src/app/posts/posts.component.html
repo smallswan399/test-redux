@@ -1,9 +1,22 @@
 <h1>Posts Component</h1>
 
 
-<div *ngFor="let post of (posts$ | async)">
-  <span>{{post.id}}</span>
-  <span>{{post.title}}</span>
-  <span>{{post.content}}</span>
-  <span>{{post.created}}</span>
-</div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let post of (posts$ | async)">
+      <td>{{post.id}}</td>
+      <td>{{post.title}}</td>
+      <td>{{post.content}}</td>
+      <td>{{post.created | date:'medium'}}</td>
+    </tr>
+  </tbody>
+</table>

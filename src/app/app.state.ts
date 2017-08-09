@@ -12,12 +12,27 @@ export const users = (state, action) => {
     }
 };
 
-const posts = (state = {}, action) => {
+const posts = (state, action) => {
     switch (action.type) {
         case 'ADD_POSTS':
             return _.merge({}, state, action.payload);
         case 'ADD_POST':
             return _.merge({}, state, action.payload);
+        case 'UPDATE_TITLE':
+            debugger;
+            let {id, title} = action.payload;
+            let result = {
+                ...state,
+                posts: {
+                    ...state.posts,
+                    [id]: {
+                        ...state.posts[id],
+                        title: title
+                    }
+                }
+            };
+            return result;
+
         default:
             return state;
     }

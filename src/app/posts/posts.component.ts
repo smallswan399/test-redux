@@ -19,9 +19,6 @@ export class PostsComponent implements OnInit, OnDestroy {
   constructor(private userQueryService: UserQueryService) { }
 
   ngOnInit() {
-    this.posts$ = this.userQueryService.getPostsWithUser();
-    this.posts$.takeUntil(this.unSub).subscribe(s => {
-      debugger;
-    });
+    this.posts$ = this.userQueryService.getPosts();
   }
 }

@@ -44,6 +44,9 @@ export class AppComponent implements OnInit {
     });
   }
   changeTitle(post) {
-    alert(post.id);
+    this.ngRedux.dispatch({type: 'UPDATE_TITLE', payload: {
+      id: post.id,
+      title: (new Date()).toString()
+    }});
   }
 }
