@@ -17,6 +17,7 @@
       <td>{{post.title}}</td>
       <td>{{post.content}}</td>
       <td>{{post.created | date:'medium'}}</td>
+      <td>{{(getUserById(post.userId) | async)?.name}}</td>
     </tr>
   </tbody>
 </table>

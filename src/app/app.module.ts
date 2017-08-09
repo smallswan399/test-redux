@@ -8,6 +8,7 @@ import { MyServiceService } from "app/my-service.service";
 import { HttpModule } from "@angular/http";
 import { UserQueryService } from "app/users-query.service";
 import { PostsComponent } from './posts/posts.component';
+import { FormsModule }   from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PostsComponent } from './posts/posts.component';
   imports: [
     BrowserModule,
     HttpModule,
+    FormsModule,
     NgReduxModule
   ],
   providers: [MyServiceService,

@@ -21,8 +21,7 @@ export class AppComponent implements OnInit {
   user: string;
   users: string;
 
-  usersWithPosts$: Observable<User[]>;
-  posts$: Observable<Post[]>;
+  users$: Observable<User[]>;
 
   constructor(private myService: MyServiceService,
     private userQueryService: UserQueryService,
@@ -30,8 +29,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.posts$ = this.userQueryService.getPosts();
-    this.usersWithPosts$ = this.userQueryService.getUsersWithPosts();
+    this.users$ = this.userQueryService.getUsers();
 
     this.myService.getUsers().take(1).subscribe(s => {
       let normalizedData = normalizeUsers(s);
@@ -42,6 +40,10 @@ export class AppComponent implements OnInit {
       
       this.users = JSON.stringify(normalizedData);
     });
+  }
+
+  getPostsByUserId(userId: number): Observable<Post[]>{
+    return this.userQueryService.getPostsByUserId(userId);
   }
   changeTitle(post) {
     this.ngRedux.dispatch({type: 'UPDATE_TITLE', payload: {

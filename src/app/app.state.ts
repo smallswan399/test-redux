@@ -29,7 +29,7 @@ const posts = (state: ReduxTable, action) => {
         case 'ADD_POST':
             return _.merge({}, state, action.payload);
         case 'UPDATE_TITLE':
-            debugger;
+            // debugger;
             let {id, title} = action.payload;
             let result = {
                 ...state,

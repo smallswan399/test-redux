@@ -8,15 +8,19 @@
         <tr>
             <th>Id</th>
             <th>name</th>
+            <th>name edit</th>
             <th>picture</th>
+            <th>update name</th>
             <th>posts</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let item of (usersWithPosts$ | async)">
+        <tr *ngFor="let item of (users$ | async)">
             <td>{{item.id}}</td>
             <td>{{item.name}}</td>
+            <td><input type="text" [ngModel]="item.name"></td>
             <td>{{item.picture}}</td>
+            <td><button type="button">update name</button></td>
             <td>
                 <table class="table table-hover">
                     <thead>
@@ -29,7 +33,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let post of item.posts">
+                        <tr *ngFor="let post of (getPostsByUserId(item.id) | async)">
                             <td>{{post.id}}</td>
                             <td>{{post.title}}</td>
                             <td>{{post.content}}</td>

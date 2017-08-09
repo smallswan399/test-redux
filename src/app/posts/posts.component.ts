@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from "rxjs/Rx";
-import { Post } from "app/user";
+import { Post, User } from "app/user";
 import { UserQueryService } from "app/users-query.service";
 import { Subject } from "rxjs/Subject";
 
@@ -20,5 +20,10 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.posts$ = this.userQueryService.getPosts();
+  }
+
+
+  getUserById(id: number): Observable<User>{
+    return this.userQueryService.Users$.map(s => s[id]);
   }
 }
