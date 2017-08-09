@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User, Post } from "app/user";
 import { Observable } from "rxjs/Observable";
-import { IAppState } from "app/app.state";
+import { IAppState, ReduxTable } from "app/app.state";
 import { NgRedux, select } from "@angular-redux/store";
 import "rxjs/add/operator/takeUntil";
 import "rxjs/add/operator/toPromise";
@@ -37,8 +37,8 @@ export class AppComponent implements OnInit {
       let normalizedData = normalizeUsers(s);
       let users = normalizedData.entities.users;
       let posts = normalizedData.entities.posts;
-      this.ngRedux.dispatch({ type: 'ADD_POSTS', payload: { posts: posts, ids: Object.keys(posts).map(s => +s) } });
-      this.ngRedux.dispatch({ type: 'ADD_USERS', payload: { users: users, ids: normalizedData.result } });
+      this.ngRedux.dispatch({ type: 'ADD_POSTS', payload: new ReduxTable({ list: posts, ids: Object.keys(posts).map(s => +s) }) });
+      this.ngRedux.dispatch({ type: 'ADD_USERS', payload: new ReduxTable({ list: users, ids: normalizedData.result }) });
       
       this.users = JSON.stringify(normalizedData);
     });

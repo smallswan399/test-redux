@@ -1,7 +1,17 @@
 import { User } from "app/user";
 import { Post } from "./user";
 import * as _ from "lodash";
-export const users = (state, action) => {
+
+export class ReduxTable {
+    constructor(init?: Partial<ReduxTable>) {
+        Object.assign(this, init);
+    }
+
+    ids: number[] = [];
+    list: any = {}
+}
+
+export const users = (state: ReduxTable, action) => {
     switch (action.type) {
         case 'ADD_USERS':
             return _.merge({}, state, action.payload);
@@ -12,7 +22,7 @@ export const users = (state, action) => {
     }
 };
 
-const posts = (state, action) => {
+const posts = (state: ReduxTable, action) => {
     switch (action.type) {
         case 'ADD_POSTS':
             return _.merge({}, state, action.payload);
@@ -23,10 +33,10 @@ const posts = (state, action) => {
             let {id, title} = action.payload;
             let result = {
                 ...state,
-                posts: {
-                    ...state.posts,
+                list: {
+                    ...state.list,
                     [id]: {
-                        ...state.posts[id],
+                        ...state.list[id],
                         title: title
                     }
                 }
@@ -40,21 +50,15 @@ const posts = (state, action) => {
 
 export interface IAppState {
     entities: {
-        users: any;
-        posts: any;
+        users: ReduxTable;
+        posts: ReduxTable;
     }
 }
 
 export const INITIAL_STATE: IAppState = {
     entities: {
-        users: {
-            ids: [],
-            users: {}
-        },
-        posts: {
-            ids: [],
-            posts: {}
-        }
+        users: new ReduxTable(),
+        posts: new ReduxTable()
     },
 };
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IAppState } from "app/app.state";
+import { IAppState, ReduxTable } from "app/app.state";
 import { NgRedux } from "@angular-redux/store/lib/src";
 import {Observable} from 'rxjs/Rx'
 import 'rxjs/add/observable/from';
@@ -10,10 +10,10 @@ export class UserQueryService {
 
     constructor(private ngRedux: NgRedux<IAppState>) { }
 
-    UserIds$ = this.ngRedux.select(state => state.entities.users.ids);
-    Users$ = this.ngRedux.select(state => state.entities.users.users);
-    PostIds$ = this.ngRedux.select(state => state.entities.posts.ids);
-    Posts$ = this.ngRedux.select(state => state.entities.posts.posts);
+    UserIds$ = this.ngRedux.select((state: IAppState) => state.entities.users.ids);
+    Users$ = this.ngRedux.select((state: IAppState) => state.entities.users.list);
+    PostIds$ = this.ngRedux.select((state: IAppState) => state.entities.posts.ids);
+    Posts$ = this.ngRedux.select((state: IAppState) => state.entities.posts.list);
 
 
     getUsers(){
