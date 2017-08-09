@@ -3,6 +3,7 @@ import { IAppState } from "app/app.state";
 import { NgRedux } from "@angular-redux/store/lib/src";
 import {Observable} from 'rxjs/Rx'
 import 'rxjs/add/observable/from';
+import { User } from "app/user";
 
 @Injectable()
 export class UserQueryService {
@@ -19,16 +20,16 @@ export class UserQueryService {
         return Observable
         .combineLatest(this.selectUserIds$, this.selectUsers$, (userIds, users) => {
             // debugger;
-            let result = userIds.map(userId => users[userId]);
+            let result = userIds.map(userId => users[userId] ? users[userId] : new User());
             return result;
         });
     }
 
     getUsersWithPosts(){
         return Observable.combineLatest(this.getUsers(), this.selectPosts$, (users, posts) => {
-            debugger;
+            // debugger;
             return users.map(user => {
-                debugger;
+                // debugger;
                 return {
                     ...user,
                     posts: user.posts.map(s => posts[s])

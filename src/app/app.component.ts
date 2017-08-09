@@ -18,11 +18,9 @@ import { UserQueryService } from "app/users-query.service";
 })
 export class AppComponent implements OnInit {
   private unSub: Subject<void> = new Subject<void>();
-  title = 'app';
   user: string;
   users: string;
 
-  users$: Observable<User[]>;
   usersWithPosts$: Observable<User[]>;
   posts$: Observable<Post[]>;
 
@@ -33,15 +31,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.posts$ = this.userQueryService.getPosts();
-    this.users$ = this.userQueryService.getUsers();
     this.usersWithPosts$ = this.userQueryService.getUsersWithPosts();
 
     this.myService.getUsers().take(1).subscribe(s => {
       let normalizedData = normalizeUsers(s);
       let users = normalizedData.entities.users;
       let posts = normalizedData.entities.posts;
-      this.ngRedux.dispatch({ type: 'ADD_USERS', payload: { users: users, ids: normalizedData.result } });
       this.ngRedux.dispatch({ type: 'ADD_POSTS', payload: { posts: posts, ids: Object.keys(posts).map(s => +s) } });
+      this.ngRedux.dispatch({ type: 'ADD_USERS', payload: { users: users, ids: normalizedData.result } });
+      
       this.users = JSON.stringify(normalizedData);
     });
   }
