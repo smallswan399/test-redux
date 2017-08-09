@@ -10,15 +10,15 @@ export class UserQueryService {
 
     constructor(private ngRedux: NgRedux<IAppState>) { }
 
-    selectUserIds$ = this.ngRedux.select(state => state.entities.users.ids);
-    selectUsers$ = this.ngRedux.select(state => state.entities.users.users);
-    selectPostIds$ = this.ngRedux.select(state => state.entities.posts.ids);
-    selectPosts$ = this.ngRedux.select(state => state.entities.posts.posts);
+    UserIds$ = this.ngRedux.select(state => state.entities.users.ids);
+    Users$ = this.ngRedux.select(state => state.entities.users.users);
+    PostIds$ = this.ngRedux.select(state => state.entities.posts.ids);
+    Posts$ = this.ngRedux.select(state => state.entities.posts.posts);
 
 
     getUsers(){
         return Observable
-        .combineLatest(this.selectUserIds$, this.selectUsers$, (userIds, users) => {
+        .combineLatest(this.UserIds$, this.Users$, (userIds, users) => {
             // debugger;
             let result = userIds.map(userId => users[userId] ? users[userId] : new User());
             return result;
@@ -26,7 +26,7 @@ export class UserQueryService {
     }
 
     getUsersWithPosts(){
-        return Observable.combineLatest(this.getUsers(), this.selectPosts$, (users, posts) => {
+        return Observable.combineLatest(this.getUsers(), this.Posts$, (users, posts) => {
             // debugger;
             return users.map(user => {
                 // debugger;
@@ -39,12 +39,12 @@ export class UserQueryService {
     }
 
     getPosts(){
-        return Observable.combineLatest(this.selectPostIds$, this.selectPosts$, (postIds, posts) => {
+        return Observable.combineLatest(this.PostIds$, this.Posts$, (postIds, posts) => {
             return postIds.map(id => posts[id]);
         })
     }
     getPostsWithUser(){
-        return Observable.combineLatest(this.getPosts, this.selectUsers$, (post, users) => {
+        return Observable.combineLatest(this.getPosts, this.Users$, (post, users) => {
             debugger;
             return {
                 ...post,
