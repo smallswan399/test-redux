@@ -22,9 +22,9 @@ export class AppComponent implements OnInit {
   user: string;
   users: string;
 
-  // users$: Observable<User[]>;
-  // usersWithPosts$: Observable<User[]>;
-  // posts$: Observable<Post[]>;
+  users$: Observable<User[]>;
+  usersWithPosts$: Observable<User[]>;
+  posts$: Observable<Post[]>;
 
   constructor(private myService: MyServiceService,
     private userQueryService: UserQueryService,
@@ -32,9 +32,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.posts$ = this.userQueryService.getPosts();
-    // this.users$ = this.userQueryService.getUsers();
-    // this.usersWithPosts$ = this.userQueryService.getUsersWithPosts();
+    this.posts$ = this.userQueryService.getPosts();
+    this.users$ = this.userQueryService.getUsers();
+    this.usersWithPosts$ = this.userQueryService.getUsersWithPosts();
 
     this.myService.getUsers().take(1).subscribe(s => {
       let normalizedData = normalizeUsers(s);
@@ -43,13 +43,9 @@ export class AppComponent implements OnInit {
       this.ngRedux.dispatch({ type: 'ADD_USERS', payload: { users: users, ids: normalizedData.result } });
       this.ngRedux.dispatch({ type: 'ADD_POSTS', payload: { posts: posts, ids: Object.keys(posts).map(s => +s) } });
       this.users = JSON.stringify(normalizedData);
-
-      // this.users$ = this.userQueryService.getUsers();
-      // this.usersWithPosts$ = this.userQueryService.getUsersWithPosts();
     });
   }
   changeTitle(post) {
     alert(post.id);
   }
-  // getUserWithPost()
 }
