@@ -41,3 +41,7 @@ testem.log
 .DS_Store
 Thumbs.db
 hello-dpd
+/.vs/test-redux/v15
+/packages
+/test-redux/bin/Debug
+/test-redux/obj/Debug
