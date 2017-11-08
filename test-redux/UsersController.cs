@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,7 +37,32 @@ namespace test_redux
                             UserId = 1
                         }
                     }
+                },
+              new User()
+              {
+                Id = 2,
+                Name = "nguyen",
+                Picture = "test",
+                Posts = new List<Post>()
+                {
+                  new Post()
+                  {
+                    Id = 3,
+                    Content = "test3",
+                    Created = DateTime.Now,
+                    Title = "test3",
+                    UserId = 2
+                  },
+                  new Post()
+                  {
+                    Id = 4,
+                    Content = "test4",
+                    Created = DateTime.Now,
+                    Title = "test4",
+                    UserId = 2
+                  }
                 }
+              }
             };
         }
     }
