@@ -11,12 +11,25 @@ export class ReduxTable {
     list: any = {}
 }
 
-export const users = (state: ReduxTable, action) => {
+const users = (state: ReduxTable, action) => {
     switch (action.type) {
         case 'ADD_USERS':
             return _.merge({}, state, action.payload);
         case 'ADD_USER':
             return _.merge({}, state, action.payload);
+        case 'UPDATE_USER':
+            let {id, name} = action.payload;
+            let result = {
+                ...state,
+                list: {
+                    ...state.list,
+                    [id]: {
+                        ...state.list[id],
+                        name: name
+                    }
+                }
+            }
+            return result;
         default:
             return state;
     }

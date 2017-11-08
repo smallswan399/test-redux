@@ -51,4 +51,15 @@ export class AppComponent implements OnInit {
       title: (new Date()).toString()
     }});
   }
+
+  updateName(id: number, name: string){
+    this.ngRedux.dispatch({
+      type: 'UPDATE_USER',
+      payload: {id: id, name: name}
+    });
+  }
+
+  doSomething(){
+
+  }
 }

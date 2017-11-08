@@ -18,9 +18,9 @@
         <tr *ngFor="let item of (users$ | async)">
             <td>{{item.id}}</td>
             <td>{{item.name}}</td>
-            <td><input type="text" [ngModel]="item.name"></td>
+            <td><input ref-name type="text" [ngModel]="item.name"></td>
             <td>{{item.picture}}</td>
-            <td><button type="button">update name</button></td>
+            <td><button type="button" (click)="updateName(item.id, name.value)">update name</button></td>
             <td>
                 <table class="table table-hover">
                     <thead>
@@ -46,5 +46,7 @@
         </tr>
     </tbody>
 </table> 
+
+<button (click)="doSomething()"></button>
 
   <app-posts></app-posts>  
