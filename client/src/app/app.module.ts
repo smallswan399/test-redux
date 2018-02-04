@@ -9,6 +9,7 @@ import { HttpModule } from "@angular/http";
 import { UserQueryService } from "app/users-query.service";
 import { PostsComponent } from './posts/posts.component';
 import { FormsModule }   from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FormsModule }   from '@angular/forms';
     BrowserModule,
     HttpModule,
     FormsModule,
-    NgReduxModule
+    NgReduxModule,
+    AppRoutingModule
   ],
   providers: [MyServiceService,
     UserQueryService
