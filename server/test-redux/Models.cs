@@ -11,7 +11,7 @@ namespace test_redux
         public int Id { get; set; }
         public string Name { get; set; }
         public string Picture { get; set; }
-        public IEnumerable<Post> Posts { get; set; }
+        public List<Post> Posts { get; set; }
     }
 
     public class Post

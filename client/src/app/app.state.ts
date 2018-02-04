@@ -1,5 +1,4 @@
 import { User } from "app/user";
-import { Post } from "./user";
 import * as _ from "lodash";
 
 export class ReduxTable {
