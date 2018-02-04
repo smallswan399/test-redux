@@ -30,7 +30,7 @@ export class UsersComponent implements OnInit {
         this.users$ = this.userQueryService.getUsers();
 
         this.myService.getUsers().take(1).subscribe(s => {
-            let normalizedData = normalizeUsers(s);
+            let normalizedData = normalizeUsers(s.list);
             let users = normalizedData.entities.users;
             // let posts = normalizedData.entities.posts;
             // this.ngRedux.dispatch({ type: 'ADD_POSTS', payload: new ReduxTable({ list: posts, ids: Object.keys(posts).map(s => +s) }) });
