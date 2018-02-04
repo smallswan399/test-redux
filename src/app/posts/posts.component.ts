@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from "rxjs/Rx";
-import { Post, User } from "app/user";
+import { User } from "app/user";
 import { UserQueryService } from "app/users-query.service";
 import { Subject } from "rxjs/Subject";
+import { Post } from 'app/post';
 
 @Component({
   selector: 'app-posts',
@@ -24,6 +25,6 @@ export class PostsComponent implements OnInit, OnDestroy {
 
 
   getUserById(id: number): Observable<User>{
-    return this.userQueryService.Users$.map(s => s[id]);
+    return this.userQueryService.getUserById(id);
   }
 }
