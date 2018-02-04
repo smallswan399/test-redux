@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { UsersComponent } from './users/users.component';
 import { RouterModule } from '@angular/router';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import { RouterModule } from '@angular/router';
         FormsModule,
         NgReduxModule,
         AppRoutingModule,
-        RouterModule
+        RouterModule,
+        NgxPaginationModule
     ],
     providers: [MyHttpService,
         UserQueryService
