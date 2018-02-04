@@ -8,28 +8,32 @@ import { MyServiceService } from "app/my-service.service";
 import { HttpModule } from "@angular/http";
 import { UserQueryService } from "app/users-query.service";
 import { PostsComponent } from './posts/posts.component';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { UsersComponent } from './users/users.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PostsComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpModule,
-    FormsModule,
-    NgReduxModule,
-    AppRoutingModule
-  ],
-  providers: [MyServiceService,
-    UserQueryService
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        PostsComponent,
+        UsersComponent
+    ],
+    imports: [
+        BrowserModule,
+        HttpModule,
+        FormsModule,
+        NgReduxModule,
+        AppRoutingModule,
+        RouterModule
+    ],
+    providers: [MyServiceService,
+        UserQueryService
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule { 
-  constructor(ngRedux: NgRedux<IAppState>) {
-    ngRedux.configureStore(rootReducer, INITIAL_STATE, [createLogger()]);
-  }
+export class AppModule {
+    constructor(ngRedux: NgRedux<IAppState>) {
+        ngRedux.configureStore(rootReducer, INITIAL_STATE, [createLogger()]);
+    }
 }
