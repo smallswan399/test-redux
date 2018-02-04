@@ -46,14 +46,23 @@ namespace test_redux
 				_user.Add(GetRandomUser());
 			}
 		}
-		public IEnumerable<User> Get()
+		public PagedList<User> Get(int page = 1, int size = 10)
 		{
-			return _user.Select(s => new User()
+			var result = _user.OrderBy(s => s.Id).Skip((page - 1) * size).Take(size).Select(s => new User()
 			{
 				Id = s.Id,
 				Name = s.Name,
 				Picture = s.Picture
 			});
+
+			//var a = new List<User>() { new User()}
+			return new PagedList<User>()
+			{
+				List = result.ToList(),
+				Page = page,
+				Count = _user.Count,
+				Size = size
+			};
 		}
 	}
 }
