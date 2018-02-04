@@ -59,9 +59,12 @@ namespace test_redux
 			return new PagedList<User>()
 			{
 				List = result.ToList(),
-				Page = page,
-				Count = _user.Count,
-				Size = size
+				PageInfo = new PageInfo()
+				{
+					Page = page,
+					Count = _user.Count,
+					Size = size
+				}
 			};
 		}
 	}

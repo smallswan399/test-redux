@@ -4,11 +4,8 @@ using Newtonsoft.Json;
 
 namespace test_redux
 {
-	public class PagedList<T>
+	public class PageInfo
 	{
-		[JsonProperty(PropertyName = "list")]
-		public List<T> List { get; set; }
-
 		[JsonProperty(PropertyName = "page")]
 		public int Page { get; set; }
 
@@ -17,5 +14,14 @@ namespace test_redux
 
 		[JsonProperty(PropertyName = "count")]
 		public long Count { get; set; }
+	}
+	public class PagedList<T>
+	{
+		[JsonProperty(PropertyName = "list")]
+		public List<T> List { get; set; }
+
+		[JsonProperty(PropertyName = "pageInfo")]
+		public PageInfo PageInfo { get; set; }
+		
 	}
 }

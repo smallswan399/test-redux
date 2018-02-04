@@ -18,7 +18,7 @@ export class MyHttpService {
     return this.http.get("http://localhost:9000/api/users/1").map(s => s.json());
   }
 
-  getUsers(): Observable<PagedList<User>>{
-    return this.http.get("http://localhost:9000/api/users").map(s => s.json());
+  getUsers(page: number = 1): Observable<PagedList<User>>{
+    return this.http.get("http://localhost:9000/api/users?page=" + page).map(s => s.json());
   }
 }

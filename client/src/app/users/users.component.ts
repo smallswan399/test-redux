@@ -16,6 +16,7 @@ import { normalizeUsers } from 'app/schema';
 })
 export class UsersComponent implements OnInit {
     private unSub: Subject<void> = new Subject<void>();
+    p: number = 1;
     user: string;
     users: string;
 
@@ -29,7 +30,7 @@ export class UsersComponent implements OnInit {
     ngOnInit(): void {
         this.users$ = this.userQueryService.getUsers();
 
-        this.myService.getUsers().take(1).subscribe(s => {
+        this.myService.getUsers(this.p).take(1).subscribe(s => {
             let normalizedData = normalizeUsers(s.list);
             let users = normalizedData.entities.users;
             // let posts = normalizedData.entities.posts;
@@ -59,7 +60,12 @@ export class UsersComponent implements OnInit {
         });
     }
 
-    doSomething() {
-
+    pageChange(event) {
+        this.p = event;
+        this.myService.getUsers(event).take(1).subscribe(s => {
+            let normalizedData = normalizeUsers(s.list);
+            let users = normalizedData.entities.users;
+            this.ngRedux.dispatch({ type: 'ADD_USERS', payload: new ReduxTable({ list: users, ids: normalizedData.result }) });
+        });
     }
 }

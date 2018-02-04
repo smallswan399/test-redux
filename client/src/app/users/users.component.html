@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let item of (users$ | async) | paginate: { itemsPerPage: 5, currentPage: 1 }">
+        <tr *ngFor="let item of (users$ | async) | paginate: { itemsPerPage: 5, currentPage: p }">
             <td>{{item.id}}</td>
             <td>{{item.name}}</td>
             <td><input ref-name type="text" [ngModel]="item.name"></td>
@@ -18,3 +18,4 @@
         </tr>
     </tbody>
 </table> 
+<pagination-controls maxSize="9" (pageChange)="pageChange($event)"></pagination-controls>

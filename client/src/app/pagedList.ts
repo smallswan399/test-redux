@@ -4,6 +4,15 @@ export class PagedList<T> {
     }
 
     list: T[];
+    pageInfo: PageInfo;
+}
+
+
+export class PageInfo {
+    constructor(parameters?: Partial<PageInfo>) {
+        Object.assign(this, parameters);
+    }
+    
     page: number;
     size: number;
     count: number;
