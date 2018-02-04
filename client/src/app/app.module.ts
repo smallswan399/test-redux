@@ -4,7 +4,7 @@ import { NgReduxModule, NgRedux } from "@angular-redux/store";
 import { AppComponent } from './app.component';
 import { IAppState, INITIAL_STATE, rootReducer } from "app/app.state";
 import { createLogger } from 'redux-logger';
-import { MyServiceService } from "app/my-service.service";
+import { MyHttpService } from "app/my-service.service";
 import { HttpModule } from "@angular/http";
 import { UserQueryService } from "app/users-query.service";
 import { PostsComponent } from './posts/posts.component';
@@ -27,7 +27,7 @@ import { RouterModule } from '@angular/router';
         AppRoutingModule,
         RouterModule
     ],
-    providers: [MyServiceService,
+    providers: [MyHttpService,
         UserQueryService
     ],
     bootstrap: [AppComponent]

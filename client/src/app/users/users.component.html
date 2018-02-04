@@ -1,3 +1,20 @@
-<p>
-  users works!
-</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>name</th>
+            <th>name edit</th>
+            <th>picture</th>
+            <th>update name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of (users$ | async)">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td><input ref-name type="text" [ngModel]="item.name"></td>
+            <td>{{item.picture}}</td>
+            <td><button type="button" (click)="updateName(item.id, name.value)">update name</button></td>
+        </tr>
+    </tbody>
+</table> 

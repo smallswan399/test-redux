@@ -6,7 +6,7 @@ import "rxjs/add/operator/takeUntil";
 import "rxjs/add/operator/toPromise";
 import "rxjs/add/operator/take";
 import { Subject } from "rxjs/Subject";
-import { MyServiceService } from "app/my-service.service";
+import { MyHttpService } from "app/my-service.service";
 import { normalizeUser, normalizeUsers } from "app/schema";
 import { UserQueryService } from "app/users-query.service";
 import { User } from 'app/user';
@@ -18,51 +18,7 @@ import { Post } from 'app/post';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-    private unSub: Subject<void> = new Subject<void>();
-    user: string;
-    users: string;
-
-    users$: Observable<User[]>;
-
-    constructor(private myService: MyServiceService,
-        private userQueryService: UserQueryService,
-        private ngRedux: NgRedux<IAppState>) {
-    }
-
     ngOnInit(): void {
-        this.users$ = this.userQueryService.getUsers();
-
-        this.myService.getUsers().take(1).subscribe(s => {
-            let normalizedData = normalizeUsers(s);
-            let users = normalizedData.entities.users;
-            let posts = normalizedData.entities.posts;
-            this.ngRedux.dispatch({ type: 'ADD_POSTS', payload: new ReduxTable({ list: posts, ids: Object.keys(posts).map(s => +s) }) });
-            this.ngRedux.dispatch({ type: 'ADD_USERS', payload: new ReduxTable({ list: users, ids: normalizedData.result }) });
-
-            this.users = JSON.stringify(normalizedData);
-        });
-    }
-
-    getPostsByUserId(userId: number): Observable<Post[]> {
-        return this.userQueryService.getPostsByUserId(userId);
-    }
-    changeTitle(post) {
-        this.ngRedux.dispatch({
-            type: 'UPDATE_TITLE', payload: {
-                id: post.id,
-                title: (new Date()).toString()
-            }
-        });
-    }
-
-    updateName(id: number, name: string) {
-        this.ngRedux.dispatch({
-            type: 'UPDATE_USER',
-            payload: { id: id, name: name }
-        });
-    }
-
-    doSomething() {
-
+        
     }
 }
