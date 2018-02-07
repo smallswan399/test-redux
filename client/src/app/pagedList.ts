@@ -13,7 +13,7 @@ export class PageInfo {
         Object.assign(this, parameters);
     }
     
-    page: number;
-    size: number;
-    count: number;
+    page?: number;
+    size?: number;
+    count?: number;
 }

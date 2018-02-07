@@ -8,6 +8,8 @@ import { NgRedux } from '@angular-redux/store';
 import { Subject } from 'rxjs';
 import { User } from 'app/user';
 import { normalizeUsers } from 'app/schema';
+import { PageInfo } from 'app/pagedList';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-users',
@@ -16,7 +18,11 @@ import { normalizeUsers } from 'app/schema';
 })
 export class UsersComponent implements OnInit {
     private unSub: Subject<void> = new Subject<void>();
-    p: number = 1;
+    pageInfo: PageInfo = new PageInfo({
+        page: 1,
+        size: 5
+    });
+    
     user: string;
     users: string;
 
@@ -28,18 +34,19 @@ export class UsersComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.users$ = this.userQueryService.getUsers();
+        this.users$ = this.userQueryService.getUsers().map(s => {
+            let result = _(s).orderBy(['id']).drop((this.pageInfo.page - 1)*this.pageInfo.size).take(this.pageInfo.size).value();
+            return result;
+        });
 
-        this.myService.getUsers(this.p).take(1).subscribe(s => {
+        this.myService.getUsers(this.pageInfo).take(1).subscribe(s => {
+            this.pageInfo = s.pageInfo;
             let normalizedData = normalizeUsers(s.list);
             let users = normalizedData.entities.users;
-            // let posts = normalizedData.entities.posts;
-            // this.ngRedux.dispatch({ type: 'ADD_POSTS', payload: new ReduxTable({ list: posts, ids: Object.keys(posts).map(s => +s) }) });
             this.ngRedux.dispatch({ type: 'ADD_USERS', payload: new ReduxTable({ list: users, ids: normalizedData.result }) });
-
-            // this.users = JSON.stringify(normalizedData);
         });
     }
+
 
     getPostsByUserId(userId: number): Observable<Post[]> {
         return this.userQueryService.getPostsByUserId(userId);
@@ -61,8 +68,11 @@ export class UsersComponent implements OnInit {
     }
 
     pageChange(event) {
-        this.p = event;
-        this.myService.getUsers(event).take(1).subscribe(s => {
+        this.myService.getUsers(new PageInfo({
+            ...this.pageInfo,
+            page: event
+        })).take(1).subscribe(s => {
+            this.pageInfo = s.pageInfo;
             let normalizedData = normalizeUsers(s.list);
             let users = normalizedData.entities.users;
             this.ngRedux.dispatch({ type: 'ADD_USERS', payload: new ReduxTable({ list: users, ids: normalizedData.result }) });
