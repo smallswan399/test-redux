@@ -13,7 +13,8 @@ export class ObjectInitializationComponent implements OnInit {
         let o = {
             first: 'dan',
             last: 'nguyen',
-            age: 12
+            age: undefined,
+            address: 'tset'
         };
         let name = new Name({
             first: 'a',
@@ -21,10 +22,11 @@ export class ObjectInitializationComponent implements OnInit {
         });
 
         let aad = new Name(o);
-
-
+        type t = keyof Name;
+        let a:t;
         console.log(name);
         console.log(aad);
+        console.log(Object.keys(new Name()));
     }
 
 }
@@ -33,8 +35,7 @@ class Name {
     constructor(parameters?: Partial<Name>) {
         Object.assign(this, parameters);
     }
-
-    first: string;
-    last: string;
-    address: string;
+    first?: string;
+    last?: string;
+    address?: string;
 }
