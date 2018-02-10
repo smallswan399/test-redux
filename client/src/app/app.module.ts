@@ -14,13 +14,15 @@ import { UsersComponent } from './users/users.component';
 import { RouterModule } from '@angular/router';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ObjectInitializationComponent } from './object-initialization/object-initialization.component';
+import { TemplateComponent } from './template/template.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         PostsComponent,
         UsersComponent,
-        ObjectInitializationComponent
+        ObjectInitializationComponent,
+        TemplateComponent
     ],
     imports: [
         BrowserModule,
