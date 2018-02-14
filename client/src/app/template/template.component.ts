@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./template.component.css']
 })
 export class TemplateComponent implements OnInit {
-
+    done: boolean = false;
   constructor() { }
 
   ngOnInit() {
   }
-
+  click(){
+      this.done = !this.done;
+  }
 }
