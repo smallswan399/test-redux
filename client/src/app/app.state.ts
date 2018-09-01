@@ -1,13 +1,12 @@
-import { User } from "app/user";
-import * as _ from "lodash";
+import * as _ from 'lodash';
+import { Test } from './test';
 
 export class ReduxTable {
+    ids: number[] = [];
+    list: any = {};
     constructor(init?: Partial<ReduxTable>) {
         Object.assign(this, init);
     }
-
-    ids: number[] = [];
-    list: any = {}
 }
 
 const users = (state: ReduxTable, action) => {
@@ -17,8 +16,8 @@ const users = (state: ReduxTable, action) => {
         case 'ADD_USER':
             return _.merge({}, state, action.payload);
         case 'UPDATE_USER':
-            let {id, name} = action.payload;
-            let result = {
+            const { id, name } = action.payload;
+            const result = {
                 ...state,
                 list: {
                     ...state.list,
@@ -42,8 +41,8 @@ const posts = (state: ReduxTable, action) => {
             return _.merge({}, state, action.payload);
         case 'UPDATE_TITLE':
             // debugger;
-            let {id, title} = action.payload;
-            let result = {
+            const { id, title } = action.payload;
+            const result = {
                 ...state,
                 list: {
                     ...state.list,
@@ -61,6 +60,7 @@ const posts = (state: ReduxTable, action) => {
 };
 
 export interface IAppState {
+    test: Test;
     entities: {
         users: ReduxTable;
         posts: ReduxTable;
@@ -68,14 +68,31 @@ export interface IAppState {
 }
 
 export const INITIAL_STATE: IAppState = {
+    test: new Test(),
     entities: {
         users: new ReduxTable(),
         posts: new ReduxTable()
     },
 };
 
+const tests = (state: Test, action) => {
+    switch (action.type) {
+        case 'ADD_TEST':
+            const newO =  {
+                ...action.payload
+            };
+            if (_.isEqual(state, newO) === true) {
+                return state;
+            }
+            return newO;
+        default:
+            return state;
+    }
+};
+
 export function rootReducer(state: IAppState, action): IAppState {
     return {
+        test: tests(state.test, action),
         entities: {
             users: users(state.entities.users, action),
             posts: posts(state.entities.posts, action)

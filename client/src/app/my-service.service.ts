@@ -9,16 +9,16 @@ import { User } from 'app/user';
 @Injectable()
 export class MyHttpService {
   constructor(private http: Http) { }
-  
-  getPosts(){
-    return this.http.get("http://localhost:9000/api/Posts").map(s => s.json());
+
+  getPosts() {
+    return this.http.get('http://localhost:9000/api/Posts').map(s => s.json());
   }
 
-  getUser(){
-    return this.http.get("http://localhost:9000/api/users/1").map(s => s.json());
+  getUser() {
+    return this.http.get('http://localhost:9000/api/users/1').map(s => s.json());
   }
 
-  getUsers(): Observable<PagedList<User>>{
-    return this.http.get("http://localhost:9000/api/users").map(s => s.json());
+  getUsers(): Observable<PagedList<User>> {
+    return this.http.get('http://localhost:9000/api/users').map(s => s.json());
   }
 }
