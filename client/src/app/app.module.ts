@@ -13,13 +13,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { UsersComponent } from './users/users.component';
 import { RouterModule } from '@angular/router';
 import { TestsComponent } from './tests/tests.component';
+import { ProductsComponent } from './products/products.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         PostsComponent,
         UsersComponent,
-        TestsComponent
+        TestsComponent,
+        ProductsComponent
     ],
     imports: [
         BrowserModule,

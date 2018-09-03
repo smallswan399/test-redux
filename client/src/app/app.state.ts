@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import { Test } from './test';
+import { Product } from './post';
 
 export class ReduxTable {
     ids: number[] = [];
@@ -61,6 +62,7 @@ const posts = (state: ReduxTable, action) => {
 
 export interface IAppState {
     entities: {
+        products: Product[];
         tests: ReduxTable;
         users: ReduxTable;
         posts: ReduxTable;
@@ -69,6 +71,7 @@ export interface IAppState {
 
 export const INITIAL_STATE: IAppState = {
     entities: {
+        products: [],
         tests: new ReduxTable(),
         users: new ReduxTable(),
         posts: new ReduxTable()
@@ -78,17 +81,86 @@ export const INITIAL_STATE: IAppState = {
 const tests = (state: ReduxTable, action) => {
     switch (action.type) {
         case 'add_tests':
-            return myAddMergeNumber(state, action);
+            const addingIds = action.payload.ids;
+            const existIds = state.ids;
+            const newIds = _.difference(addingIds, existIds).sort();
+            if (!newIds.length) {
+                return state;
+            } else {
+                const result = {
+                    ...state,
+                    ids: [...existIds, ...newIds],
+                    list: {
+                        ...state.list,
+                        ..._.pick(action.payload.list, newIds)
+                    }
+                };
+
+                if (_.isEqual(state, result) === true) {
+                    return state;
+                } else {
+                    return result;
+                }
+            }
         case 'add_or_update_tests':
-            return myMerge(state, action);
+            const addings = _.difference(action.payload.ids, state.ids);
+            const updatings = _.intersection(action.payload.ids, state.ids);
+            let result;
+            if (addings.length) {
+                result = {
+                    ...state,
+                    ids: [...state.ids, ...addingIds].sort(),
+                    list: {
+                        ...state.list,
+                        ..._.pick(action.payload.list, addingIds)
+                    }
+                };
+            }
+            if (updatings.length) {
+                result = {
+                    ...state,
+                    list: {
+                        ...state.list,
+                        ..._.pick(action.payload.list, updatings)
+                    }
+                };
+            }
+            if (_.isEqual(state, result) === true) {
+                return state;
+            } else {
+                return result;
+            }
         default:
             return state;
     }
 };
 
+const products = (state: Product[], action) => {
+    switch (action.type) {
+        case 'add_products':
+            const adding = action.payload;
+            const addingIds = _.differenceBy(adding, state, (s => s.id));
+            if (addingIds.length) {
+                return [
+                    ...state,
+                    ...addingIds
+                ];
+            }
+            break;
+        case 'add_product':
+            break;
+        case 'update_product':
+            break;
+        default:
+            break;
+    }
+    return state;
+};
+
 export function rootReducer(state: IAppState, action): IAppState {
     return {
         entities: {
+            products: products(state.entities.products, action),
             tests: tests(state.entities.tests, action),
             users: users(state.entities.users, action),
             posts: posts(state.entities.posts, action)
@@ -128,7 +200,6 @@ const myAddMergeNumber = (state: ReduxTable, action: any) => {
         if (_.isEqual(state, result) === true) {
             return state;
         } else {
-            alert(JSON.stringify(result));
             return result;
         }
     }
