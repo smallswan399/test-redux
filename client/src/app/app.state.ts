@@ -103,6 +103,7 @@ const tests = (state: ReduxTable, action) => {
                 }
             }
         case 'add_or_update_tests':
+            // return state;
             const addings = _.difference(action.payload.ids, state.ids);
             const updatings = _.intersection(action.payload.ids, state.ids);
             let result;
@@ -129,10 +130,8 @@ const tests = (state: ReduxTable, action) => {
                 return state;
             }
             if (_.isEqual(state, result) === true) {
-                console.log('return state');
                 return state;
             } else {
-                console.log('return result');
                 return result;
             }
         default:
