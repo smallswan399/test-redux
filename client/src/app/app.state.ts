@@ -60,31 +60,27 @@ const posts = (state: ReduxTable, action) => {
 };
 
 export interface IAppState {
-    test: Test;
     entities: {
+        tests: ReduxTable;
         users: ReduxTable;
         posts: ReduxTable;
     }
 }
 
 export const INITIAL_STATE: IAppState = {
-    test: new Test(),
     entities: {
+        tests: new ReduxTable(),
         users: new ReduxTable(),
         posts: new ReduxTable()
     },
 };
 
-const tests = (state: Test, action) => {
+const tests = (state: ReduxTable, action) => {
     switch (action.type) {
-        case 'ADD_TEST':
-            const newO =  {
-                ...action.payload
-            };
-            if (_.isEqual(state, newO) === true) {
-                return state;
-            }
-            return newO;
+        case 'add_tests':
+            return myAddMergeNumber(state, action);
+        case 'add_or_update_tests':
+            return myMerge(state, action);
         default:
             return state;
     }
@@ -92,10 +88,48 @@ const tests = (state: Test, action) => {
 
 export function rootReducer(state: IAppState, action): IAppState {
     return {
-        test: tests(state.test, action),
         entities: {
+            tests: tests(state.entities.tests, action),
             users: users(state.entities.users, action),
             posts: posts(state.entities.posts, action)
         }
     }
 }
+
+const myMerge = (state, action) => {
+    const newState = _.mergeWith({}, state, action.payload, (objValue, srcValue) => {
+        if (_.isArray(objValue)) {
+            return _.union(objValue, srcValue).sort();
+        }
+    });
+    if (_.isEqual(state, newState) === true) {
+        return state;
+    } else {
+        return newState;
+    }
+};
+
+const myAddMergeNumber = (state: ReduxTable, action: any) => {
+    const addingIds = action.payload.ids;
+    const existIds = state.ids;
+    const newIds = _.difference(addingIds, existIds).sort();
+    if (!newIds.length) {
+        return state;
+    } else {
+        const newState = new ReduxTable({
+            ids: newIds,
+            list: _.pick(action.payload.list, newIds)
+        });
+        const result = _.mergeWith({}, state, newState, (objValue, srcValue) => {
+            if (_.isArray(objValue)) {
+                return _.union(objValue, srcValue).sort();
+            }
+        });
+        if (_.isEqual(state, result) === true) {
+            return state;
+        } else {
+            alert(JSON.stringify(result));
+            return result;
+        }
+    }
+};

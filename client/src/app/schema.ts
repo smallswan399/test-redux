@@ -10,7 +10,11 @@ export const user = new schema.Entity('users', {
 
 export const users = new schema.Array(user);
 
-
+export const test = new schema.Entity('tests');
+export const tests = new schema.Array(test);
 
 export const normalizeUser = (data) => normalize(data, user);
 export const normalizeUsers = (data) => normalize(data, users);
+
+export const normalizeTest = (data) => normalize(data, test);
+export const normalizeTests = (data) => normalize(data, tests);

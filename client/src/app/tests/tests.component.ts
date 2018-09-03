@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Test } from '../test';
-import { IAppState } from '../app.state';
+import { IAppState, ReduxTable } from '../app.state';
 import { NgRedux, select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
+import { normalizeTests, normalizeTest } from '../schema';
+import { Test } from '../test';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-tests',
@@ -11,35 +13,45 @@ import { Observable } from 'rxjs/Observable';
 })
 export class TestsComponent implements OnInit {
 
-  tests: Test[] = [
-    new Test({
-      id: 1,
-      name: '1234'
-    }),
-    new Test({
-      id: 2,
-      name: 'dan nguyen'
-    })
-  ];
-
-  @select(state => state.test.name) name$: Observable<string>;
-
-  @select(state => state.test) test$: Observable<Test>;
-
+  id = 0;
+  tests: Test[] = [];
   constructor(private ngRedux: NgRedux<IAppState>) { }
 
   ngOnInit() {
-    this.name$.subscribe(t => {
-      alert((t));
+    this.ngRedux.select((state: IAppState) => _.values(state.entities.tests.list)).subscribe(t => {
+      alert('new list arrived');
+      this.tests = <Test[]>t;
     });
-
-    // this.test$.subscribe(t => alert(JSON.stringify(t)));
   }
 
-  clickHandler(i) {
+  clickHandler() {
+    this.id++;
+    const data = normalizeTest(new Test({id: this.id, name: Date().toString()}));
+    const tests = data.entities.tests;
     this.ngRedux.dispatch({
-      type: 'ADD_TEST',
-      payload: this.tests[i - 1]
+      type: 'add_tests',
+      payload: new ReduxTable({
+        ids: Object.keys(tests).map(s => +s),
+        list: tests
+      })
+    });
+  }
+
+  update() {
+    const testO = new Test({
+      id: 2,
+      name: 'super mario'
+    });
+
+    const data = normalizeTest(testO);
+    const tests = data.entities.tests;
+
+    this.ngRedux.dispatch({
+      type: 'add_or_update_tests',
+      payload: new ReduxTable({
+        ids: Object.keys(tests).map(s => +s),
+        list: tests
+      })
     });
   }
 
