@@ -109,7 +109,7 @@ const tests = (state: ReduxTable, action) => {
             if (addings.length) {
                 result = {
                     ...state,
-                    ids: [...state.ids, ...addingIds].sort(),
+                    ids: [...state.ids, ...addings].sort(),
                     list: {
                         ...state.list,
                         ..._.pick(action.payload.list, addingIds)
