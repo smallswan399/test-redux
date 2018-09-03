@@ -81,15 +81,13 @@ export const INITIAL_STATE: IAppState = {
 const tests = (state: ReduxTable, action) => {
     switch (action.type) {
         case 'add_tests':
-            const addingIds = action.payload.ids;
-            const existIds = state.ids;
-            const newIds = _.difference(addingIds, existIds).sort();
+            const newIds = _.difference(action.payload.ids, state.ids);
             if (!newIds.length) {
                 return state;
             } else {
                 const result = {
                     ...state,
-                    ids: [...existIds, ...newIds],
+                    ids: [...state.ids, ...newIds].sort(),
                     list: {
                         ...state.list,
                         ..._.pick(action.payload.list, newIds)
