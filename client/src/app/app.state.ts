@@ -125,9 +125,14 @@ const tests = (state: ReduxTable, action) => {
                     }
                 };
             }
+            if (!addings.length && !updatings.length) {
+                return state;
+            }
             if (_.isEqual(state, result) === true) {
+                console.log('return state');
                 return state;
             } else {
+                console.log('return result');
                 return result;
             }
         default:

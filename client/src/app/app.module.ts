@@ -42,6 +42,6 @@ export class AppModule {
         if (devTools.isEnabled()) {
             enhancers = [...enhancers, devTools.enhancer()];
           }
-        ngRedux.configureStore(rootReducer, INITIAL_STATE, [createLogger()], enhancers);
+        ngRedux.configureStore(rootReducer, INITIAL_STATE, [], enhancers);
     }
 }

@@ -19,13 +19,13 @@ export class TestsComponent implements OnInit {
 
   ngOnInit() {
     this.ngRedux.select((state: IAppState) => _.values(state.entities.tests.list)).subscribe(t => {
-      alert('new list arrived');
+      console.log('new list arrived');
       this.tests = <Test[]>t;
     });
 
     this.ngRedux.select((state: IAppState) => state.entities.tests.list[1]).subscribe(t => {
       if (t) {
-        alert('id = 1 changed');
+        console.log('id = 1 changed');
       }
     });
   }
