@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { IAppState, ReduxTable } from 'app/app.state';
-import { NgRedux } from '@angular-redux/store/lib/src';
-import { Observable } from 'rxjs/Rx'
-import 'rxjs/add/observable/from';
-import { User } from 'app/user';
+import { NgRedux } from '@angular-redux/store';
+import { Observable, combineLatest } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
 import * as _ from 'lodash';
-import { Post } from 'app/post';
+import { IAppState } from 'app.state';
+import { User } from 'user';
+import { Post } from 'post';
 
 @Injectable()
 export class UserQueryService {
@@ -18,25 +18,25 @@ export class UserQueryService {
     constructor(private ngRedux: NgRedux<IAppState>) { }
 
     getUsers(): Observable<User[]> {
-        return this.Users$.map(s => _.values(s));
+        return this.Users$.pipe(map(s => _.values(s)));
     }
 
     getPosts(): Observable<Post[]> {
-        return this.Posts$.map(s => _.values(s));
+        return this.Posts$.pipe(map(s => _.values(s)));
     }
 
     getPostsByUserId(userId: number) {
-        return Observable.combineLatest(this.getUserById(userId).filter(s => {
+        return combineLatest(this.getUserById(userId).pipe(filter(s => {
             if (s) {
                 return true;
             }
             return false;
-        }), this.Posts$, (user, posts) => {
+        })), this.Posts$, (user, posts) => {
             return user.posts.map(id => posts[id]);
         })
     }
 
     getUserById(id: number): Observable<User> {
-        return this.Users$.map(s => s[id]);
+        return this.Users$.pipe(map(s => s[id]));
     }
 }

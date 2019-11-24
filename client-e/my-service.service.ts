@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import { PagedList } from 'app/pagedList';
-import { User } from 'app/user';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
+import { PagedList } from 'pagedList';
+import { User } from 'user';
 
 @Injectable()
 export class MyHttpService {
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
   getPosts() {
-    return this.http.get('http://localhost:9000/api/Posts').map(s => s.json());
+    return this.http.get('http://localhost:9000/api/Posts');
   }
 
   getUser() {
-    return this.http.get('http://localhost:9000/api/users/1').map(s => s.json());
+    return this.http.get('http://localhost:9000/api/users/1');
   }
 
   getUsers(): Observable<PagedList<User>> {
-    return this.http.get('http://localhost:9000/api/users').map(s => s.json());
+    return this.http.get<PagedList<User>>('http://localhost:9000/api/users');
   }
 }
