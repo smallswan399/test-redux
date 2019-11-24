@@ -1,1 +1,3 @@
-<p *ngFor="let item of posts">{{item.content}}</p>
+<p *ngFor="let item of posts">
+    <app-post [post]="item"></app-post>
+</p>
