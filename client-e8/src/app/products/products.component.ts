@@ -26,7 +26,7 @@ export class ProductsComponent implements OnInit {
     this.ngRedux.select(s => s.entities.products).subscribe(p => {
       console.log('list of items');
       if (p) {
-        this.products = p;
+        // this.products = p;
       }
     });
   }

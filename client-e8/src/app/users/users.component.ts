@@ -31,11 +31,7 @@ export class UsersComponent implements OnInit {
         this.myService.getUsers().subscribe(s => {
             const normalizedData = normalizeUsers(s.list);
             const users = normalizedData.entities.users;
-            // let posts = normalizedData.entities.posts;
-            // this.ngRedux.dispatch({ type: 'ADD_POSTS', payload: new ReduxTable({ list: posts, ids: Object.keys(posts).map(s => +s) }) });
-            this.ngRedux.dispatch({ type: 'ADD_USERS', payload: new ReduxTable({ list: users, ids: normalizedData.result }) });
-
-            // this.users = JSON.stringify(normalizedData);
+            this.ngRedux.dispatch({ type: 'users.addOrUpdate', payload: new ReduxTable({ list: users, ids: normalizedData.result }) });
         });
     }
 
