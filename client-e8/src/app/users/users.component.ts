@@ -17,22 +17,18 @@ export class UsersComponent implements OnInit {
     private unSub: Subject<void> = new Subject<void>();
     users: User[];
     constructor(private http: MyHttpService,
-        private userQueryService: UserQueryService,
+        private query: UserQueryService,
         private ngRedux: NgRedux<IAppState>) {
     }
 
     ngOnInit(): void {
-        this.userQueryService.getUsers().subscribe(users => this.users = users);
+        this.query.getUsers().subscribe(users => this.users = users);
 
         this.http.getUsers().subscribe(s => {
             const normalizedData = normalizeUsers(s);
             const users = normalizedData.entities.users;
             this.ngRedux.dispatch({ type: 'users.addOrUpdate', payload: new ReduxTable({ list: users, ids: normalizedData.result }) });
         });
-    }
-
-    getPostsByUserId(userId: number): Observable<Post[]> {
-        return this.userQueryService.getPostsByUserId(userId);
     }
     changeTitle(post) {
         this.ngRedux.dispatch({

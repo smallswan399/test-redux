@@ -24,4 +24,8 @@ export class UserComponent implements OnInit {
     this.loadPosts = true;
   }
 
+  submitHandler() {
+    this.http.updateUser(this.user).subscribe();
+  }
+
 }

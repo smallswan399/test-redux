@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PagedList } from './pagedList';
 import { User } from './user';
+import { Post } from './post';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,13 @@ export class MyHttpService {
 
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>('http://5ddae2ef5730550014fe7add.mockapi.io/users');
+  }
+
+  updateUser(user: User){
+    return this.http.put(`http://5ddae2ef5730550014fe7add.mockapi.io/users/${user.id}`, user);
+  }
+
+  updatePost(post: Post){
+    return this.http.put(`http://5ddae2ef5730550014fe7add.mockapi.io/users/${post.userId}/posts/${post.id}`, post);
   }
 }
