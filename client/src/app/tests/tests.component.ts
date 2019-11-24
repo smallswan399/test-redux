@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IAppState, ReduxTable } from '../app.state';
 import { NgRedux, select } from '@angular-redux/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { normalizeTests, normalizeTest } from '../schema';
 import { Test } from '../test';
 import * as _ from 'lodash';

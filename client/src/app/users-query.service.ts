@@ -1,42 +1,37 @@
 import { Injectable } from '@angular/core';
-import { IAppState, ReduxTable } from 'app/app.state';
-import { NgRedux } from '@angular-redux/store/lib/src';
-import { Observable } from 'rxjs/Rx'
-import 'rxjs/add/observable/from';
-import { User } from 'app/user';
+import { Observable, combineLatest } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
 import * as _ from 'lodash';
-import { Post } from 'app/post';
+import { IAppState } from './app.state';
+import { NgRedux } from '@angular-redux/store';
+import { User } from './user';
+import { Post } from './post';
 
-@Injectable()
+@Injectable({
+    providedIn: "root"
+})
 export class UserQueryService {
 
-    private UserIds$: Observable<number[]> = this.ngRedux.select((state: IAppState) => state.entities.users.ids);
+    private UserIds$: Observable<string[]> = this.ngRedux.select((state: IAppState) => state.entities.users.ids);
     private Users$: Observable<any[]> = this.ngRedux.select((state: IAppState) => state.entities.users.list);
-    private PostIds$: Observable<number[]> = this.ngRedux.select((state: IAppState) => state.entities.posts.ids);
+    private PostIds$: Observable<string[]> = this.ngRedux.select((state: IAppState) => state.entities.posts.ids);
     private Posts$: Observable<any[]> = this.ngRedux.select((state: IAppState) => state.entities.posts.list);
 
     constructor(private ngRedux: NgRedux<IAppState>) { }
 
     getUsers(): Observable<User[]> {
-        return this.Users$.map(s => _.values(s));
+        return this.Users$.pipe(map(s => _.values(s)));
     }
 
     getPosts(): Observable<Post[]> {
-        return this.Posts$.map(s => _.values(s));
+        return this.Posts$.pipe(map(s => _.values(s)));
     }
 
-    getPostsByUserId(userId: number) {
-        return Observable.combineLatest(this.getUserById(userId).filter(s => {
-            if (s) {
-                return true;
-            }
-            return false;
-        }), this.Posts$, (user, posts) => {
-            return user.posts.map(id => posts[id]);
-        })
+    getPostsByUserId(userId: string) {
+        return this.getPosts().pipe(filter(ps => ps && true), map(ps => ps.filter(p => p.userId === userId)));
     }
 
-    getUserById(id: number): Observable<User> {
-        return this.Users$.map(s => s[id]);
+    getUserById(id: string): Observable<User> {
+        return this.Users$.pipe(map(s => s[id]));
     }
 }

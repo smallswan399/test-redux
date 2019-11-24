@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Post } from 'app/post';
-import { MyHttpService } from 'app/my-service.service';
-import { UserQueryService } from 'app/users-query.service';
-import { IAppState, ReduxTable } from 'app/app.state';
 import { NgRedux } from '@angular-redux/store';
-import { User } from 'app/user';
-import { normalizeUsers } from 'app/schema';
-import { Subject } from 'rxjs/Subject';
+import { Subject, Observable } from 'rxjs';
+import { User } from '../user';
+import { MyHttpService } from '../http.service';
+import { UserQueryService } from '../users-query.service';
+import { IAppState, ReduxTable } from '../app.state';
+import { normalizeUsers } from '../schema';
+import { Post } from '../post';
 
 @Component({
   selector: 'app-users',
@@ -16,32 +15,20 @@ import { Subject } from 'rxjs/Subject';
 })
 export class UsersComponent implements OnInit {
     private unSub: Subject<void> = new Subject<void>();
-    user: string;
-    users: string;
-
-    users$: Observable<User[]>;
-
-    constructor(private myService: MyHttpService,
-        private userQueryService: UserQueryService,
+    users: User[];
+    constructor(private http: MyHttpService,
+        private query: UserQueryService,
         private ngRedux: NgRedux<IAppState>) {
     }
 
     ngOnInit(): void {
-        this.users$ = this.userQueryService.getUsers();
+        this.query.getUsers().subscribe(users => this.users = users);
 
-        this.myService.getUsers().take(1).subscribe(s => {
-            const normalizedData = normalizeUsers(s.list);
+        this.http.getUsers().subscribe(s => {
+            const normalizedData = normalizeUsers(s);
             const users = normalizedData.entities.users;
-            // let posts = normalizedData.entities.posts;
-            // this.ngRedux.dispatch({ type: 'ADD_POSTS', payload: new ReduxTable({ list: posts, ids: Object.keys(posts).map(s => +s) }) });
-            this.ngRedux.dispatch({ type: 'ADD_USERS', payload: new ReduxTable({ list: users, ids: normalizedData.result }) });
-
-            // this.users = JSON.stringify(normalizedData);
+            this.ngRedux.dispatch({ type: 'users.addOrUpdate', payload: new ReduxTable({ list: users, ids: normalizedData.result }) });
         });
-    }
-
-    getPostsByUserId(userId: number): Observable<Post[]> {
-        return this.userQueryService.getPostsByUserId(userId);
     }
     changeTitle(post) {
         this.ngRedux.dispatch({

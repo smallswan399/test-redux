@@ -3,8 +3,8 @@ export class User {
         Object.assign(this, init);
     }
 
-    id: number;
+    id: string;
     name: string;
-    picture: string;
-    posts: number[] = [];
+    avatar: string;
+    posts: number[];
 }

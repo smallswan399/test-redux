@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
-import { IAppState } from 'app/app.state';
 import { Product } from '../post';
+import { IAppState } from '../app.state';
 
 @Component({
   selector: 'app-products',
@@ -26,7 +26,7 @@ export class ProductsComponent implements OnInit {
     this.ngRedux.select(s => s.entities.products).subscribe(p => {
       console.log('list of items');
       if (p) {
-        this.products = p;
+        // this.products = p;
       }
     });
   }
