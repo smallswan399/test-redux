@@ -6,3 +6,4 @@
 packages
 obj
 bin
+/server/.vs/test-redux/v16/Server/sqlite3
