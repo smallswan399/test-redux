@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UserComponent } from './users/user/user.component';
 import { PostListComponent } from './users/user/post-list/post-list.component';
+import { PostComponent } from './users/user/post-list/post/post.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PostListComponent } from './users/user/post-list/post-list.component';
     TestsComponent,
     UsersComponent,
     UserComponent,
-    PostListComponent
+    PostListComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,

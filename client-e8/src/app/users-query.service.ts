@@ -27,18 +27,11 @@ export class UserQueryService {
         return this.Posts$.pipe(map(s => _.values(s)));
     }
 
-    getPostsByUserId(userId: number) {
-        return combineLatest(this.getUserById(userId).pipe(filter(s => {
-            if (s) {
-                return true;
-            }
-            return false;
-        })), this.Posts$, (user, posts) => {
-            return user.posts.map(id => posts[id]);
-        })
+    getPostsByUserId(userId: string) {
+        return this.getPosts().pipe(filter(ps => ps && true), map(ps => ps.filter(p => p.userId === userId)));
     }
 
-    getUserById(id: number): Observable<User> {
+    getUserById(id: string): Observable<User> {
         return this.Users$.pipe(map(s => s[id]));
     }
 }

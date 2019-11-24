@@ -5,6 +5,7 @@ import { getActionData } from 'src/app/action-data';
 import { NgRedux } from '@angular-redux/store';
 import { IAppState } from 'src/app/app.state';
 import { Post } from 'src/app/post';
+import { UserQueryService } from 'src/app/users-query.service';
 
 @Component({
   selector: 'app-post-list',
@@ -15,9 +16,10 @@ export class PostListComponent implements OnInit {
 
   @Input() userId: string;
   posts: Post[] = [];
-  constructor(private http: MyHttpService, private redux: NgRedux<IAppState>) { }
+  constructor(private http: MyHttpService, private redux: NgRedux<IAppState>, private query: UserQueryService) { }
 
   ngOnInit() {
+    this.query.getPostsByUserId(this.userId).subscribe(ps => this.posts = ps);
     this.http.getPosts(this.userId).subscribe(ps => {
       const data = normalizePosts(ps);
       const posts = data.entities.posts;
