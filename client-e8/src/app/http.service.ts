@@ -27,6 +27,9 @@ export class MyHttpService {
     return this.http.put(`http://5ddae2ef5730550014fe7add.mockapi.io/users/${user.id}`, user);
   }
 
+  createPost(post: Post) {
+    return this.http.post(`http://5ddae2ef5730550014fe7add.mockapi.io/users/${post.userId}/posts`, post);
+  }
   updatePost(post: Post){
     return this.http.put(`http://5ddae2ef5730550014fe7add.mockapi.io/users/${post.userId}/posts/${post.id}`, post);
   }

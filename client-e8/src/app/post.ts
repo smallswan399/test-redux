@@ -1,7 +1,6 @@
 export class Post {
     id: string;
     userId: string;
-    user: string;
     title: string;
     content: string;
     createdAt: Date;

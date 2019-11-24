@@ -1,3 +1,8 @@
+<form (submit)="submitHandler()">
+    <div class="form-group">
+      <input type="text" class="form-control" name="content" id="content" placeholder="Post content ..." [(ngModel)]="postContent">
+    </div>
+</form>
 <p *ngFor="let item of posts">
     <app-post [post]="item"></app-post>
 </p>

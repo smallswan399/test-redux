@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MyHttpService } from 'src/app/http.service';
-import { normalizePosts } from 'src/app/schema';
+import { normalizePosts, normalizePost } from 'src/app/schema';
 import { getActionData } from 'src/app/action-data';
 import { NgRedux } from '@angular-redux/store';
 import { IAppState } from 'src/app/app.state';
@@ -16,6 +16,7 @@ export class PostListComponent implements OnInit {
 
   @Input() userId: string;
   posts: Post[] = [];
+  postContent: string;
   constructor(private http: MyHttpService, private redux: NgRedux<IAppState>, private query: UserQueryService) { }
 
   ngOnInit() {
@@ -30,6 +31,21 @@ export class PostListComponent implements OnInit {
       }
       if (users) {
         this.redux.dispatch(getActionData(users, 'users.addOrUpdate'));
+      }
+    });
+  }
+
+  submitHandler(){
+    this.http.createPost(new Post({
+      userId: this.userId,
+      content: this.postContent,
+      title: 'title'
+    })).subscribe(p => {
+      this.postContent = '';
+      const data = normalizePost(p);
+      const posts = data.entities.posts;
+      if (posts) {
+        this.redux.dispatch(getActionData(posts, 'posts.addOrUpdate'));
       }
     });
   }
