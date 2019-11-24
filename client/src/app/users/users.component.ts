@@ -16,6 +16,7 @@ import { Post } from '../post';
 export class UsersComponent implements OnInit {
     private unSub: Subject<void> = new Subject<void>();
     users: User[];
+    p: number = 1;
     constructor(private http: MyHttpService,
         private query: UserQueryService,
         private ngRedux: NgRedux<IAppState>) {
