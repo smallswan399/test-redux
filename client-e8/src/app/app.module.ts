@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UserComponent } from './users/user/user.component';
-import { PostComponent } from './users/user/post/post.component';
+import { PostListComponent } from './users/user/post-list/post-list.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import { PostComponent } from './users/user/post/post.component';
     TestsComponent,
     UsersComponent,
     UserComponent,
-    PostComponent
+    PostListComponent
   ],
   imports: [
     BrowserModule,

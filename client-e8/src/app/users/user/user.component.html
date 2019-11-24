@@ -2,8 +2,10 @@
     <div class="card-header">
         <img src="{{user.avatar}}" alt="" style="height: 50px;">
         {{user.name}}
+
+        <button class="btn btn-primary btn-sm float-right" (click)="loadPostClickHandler()">Load Posts</button>
     </div>
-    <div class="card-body">
-        list of post
+    <div class="card-body" *ngIf="loadPosts === true">
+        <app-post-list [userId]="user.id"></app-post-list>
     </div>
 </div>

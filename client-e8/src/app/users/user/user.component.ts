@@ -14,23 +14,14 @@ import { getActionData } from 'src/app/action-data';
 export class UserComponent implements OnInit {
 
   @Input() user: User;
+  @Input() loadPosts = false;
   constructor(private http: MyHttpService, private redux: NgRedux<IAppState>) { }
 
   ngOnInit() {
-    this.http.getPosts(this.user.id).subscribe(ps => {
-      const data = normalizePosts(ps);
-      const posts = data.entities.posts;
-      const users = data.entities.users;
+  }
 
-      if (posts) {
-        this.redux.dispatch(getActionData(posts, 'posts.addOrUpdate'));
-      }
-      if (users) {
-        this.redux.dispatch(getActionData(users, 'users.addOrUpdate'));
-      }
-
-
-    })
+  loadPostClickHandler(){
+    this.loadPosts = true;
   }
 
 }
