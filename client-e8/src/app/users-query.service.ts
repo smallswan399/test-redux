@@ -12,9 +12,9 @@ import { Post } from './post';
 })
 export class UserQueryService {
 
-    private UserIds$: Observable<number[]> = this.ngRedux.select((state: IAppState) => state.entities.users.ids);
+    private UserIds$: Observable<string[]> = this.ngRedux.select((state: IAppState) => state.entities.users.ids);
     private Users$: Observable<any[]> = this.ngRedux.select((state: IAppState) => state.entities.users.list);
-    private PostIds$: Observable<number[]> = this.ngRedux.select((state: IAppState) => state.entities.posts.ids);
+    private PostIds$: Observable<string[]> = this.ngRedux.select((state: IAppState) => state.entities.posts.ids);
     private Posts$: Observable<any[]> = this.ngRedux.select((state: IAppState) => state.entities.posts.list);
 
     constructor(private ngRedux: NgRedux<IAppState>) { }

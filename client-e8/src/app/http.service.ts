@@ -10,11 +10,11 @@ import { User } from './user';
 export class MyHttpService {
   constructor(private http: HttpClient) { }
 
-  getPosts(userId: number) {
+  getPosts(userId: string) {
     return this.http.get(`http://5ddae2ef5730550014fe7add.mockapi.io/users/${userId}/posts`);
   }
 
-  getUser(id: number) {
+  getUser(id: string) {
     return this.http.get('http://5ddae2ef5730550014fe7add.mockapi.io/users/' + id);
   }
 

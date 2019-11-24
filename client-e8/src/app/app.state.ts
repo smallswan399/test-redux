@@ -11,7 +11,7 @@ export class ReduxTable<T> {
 }
 
 
-const users = (state: ReduxTable<number>, action) => {
+const users = (state: ReduxTable<string>, action) => {
     switch (action.type) {
         case 'users.add':
           return myAddMergeNumber(state, action);
@@ -22,7 +22,7 @@ const users = (state: ReduxTable<number>, action) => {
       }
 };
 
-const posts = (state: ReduxTable<number>, action) => {
+const posts = (state: ReduxTable<string>, action) => {
     switch (action.type) {
         case 'posts.add':
           return myAddMergeNumber(state, action);
@@ -34,10 +34,10 @@ const posts = (state: ReduxTable<number>, action) => {
 };
 
 export interface IEntities {
-    products: ReduxTable<number>;
-    tests: ReduxTable<number>;
-    users: ReduxTable<number>;
-    posts: ReduxTable<number>;
+    products: ReduxTable<string>;
+    tests: ReduxTable<string>;
+    users: ReduxTable<string>;
+    posts: ReduxTable<string>;
 }
 
 export interface IAppState {
@@ -53,7 +53,7 @@ export const INITIAL_STATE: IAppState = {
     },
 };
 
-const tests = (state: ReduxTable<number>, action) => {
+const tests = (state: ReduxTable<string>, action) => {
     switch (action.type) {
         case 'tests.add':
           return myAddMergeNumber(state, action);
@@ -64,7 +64,7 @@ const tests = (state: ReduxTable<number>, action) => {
       }
 };
 
-const products = (state: ReduxTable<number>, action) => {
+const products = (state: ReduxTable<string>, action) => {
     switch (action.type) {
         case 'products.add':
           return myAddMergeNumber(state, action);
@@ -87,7 +87,7 @@ export function rootReducer(state: IAppState, action): IAppState {
 }
 
 
-const myMerge = (state: ReduxTable<number>, action: any) => {
+const myMerge = (state: ReduxTable<string>, action: any) => {
     const addings = _.difference(action.payload.ids, state.ids);
     const updatings = _.intersection(action.payload.ids, state.ids);
     let result;
@@ -138,7 +138,7 @@ const myMerge = (state: ReduxTable<number>, action: any) => {
     }
 };
 
-const myAddMergeNumber = (state: ReduxTable<number>, action: any) => {
+const myAddMergeNumber = (state: ReduxTable<string>, action: any) => {
     const newIds = _.difference(action.payload.ids, state.ids);
     if (!newIds.length) {
         return state;

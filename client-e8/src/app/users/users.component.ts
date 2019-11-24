@@ -15,18 +15,14 @@ import { Post } from '../post';
 })
 export class UsersComponent implements OnInit {
     private unSub: Subject<void> = new Subject<void>();
-    user: string;
-    users: string;
-
-    users$: Observable<User[]>;
-
+    users: User[];
     constructor(private http: MyHttpService,
         private userQueryService: UserQueryService,
         private ngRedux: NgRedux<IAppState>) {
     }
 
     ngOnInit(): void {
-        this.users$ = this.userQueryService.getUsers();
+        this.userQueryService.getUsers().subscribe(users => this.users = users);
 
         this.http.getUsers().subscribe(s => {
             const normalizedData = normalizeUsers(s);

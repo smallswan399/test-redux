@@ -11,15 +11,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { PostsComponent } from './users/posts/posts.component';
+import { UserComponent } from './users/user/user.component';
+import { PostComponent } from './users/user/post/post.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PostsComponent,
     ProductsComponent,
     TestsComponent,
-    UsersComponent
+    UsersComponent,
+    UserComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
