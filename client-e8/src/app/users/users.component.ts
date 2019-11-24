@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
 import { Subject, Observable } from 'rxjs';
 import { User } from '../user';
-import { MyHttpService } from '../my-service.service';
+import { MyHttpService } from '../http.service';
 import { UserQueryService } from '../users-query.service';
 import { IAppState, ReduxTable } from '../app.state';
 import { normalizeUsers } from '../schema';
@@ -20,7 +20,7 @@ export class UsersComponent implements OnInit {
 
     users$: Observable<User[]>;
 
-    constructor(private myService: MyHttpService,
+    constructor(private http: MyHttpService,
         private userQueryService: UserQueryService,
         private ngRedux: NgRedux<IAppState>) {
     }
@@ -28,8 +28,8 @@ export class UsersComponent implements OnInit {
     ngOnInit(): void {
         this.users$ = this.userQueryService.getUsers();
 
-        this.myService.getUsers().subscribe(s => {
-            const normalizedData = normalizeUsers(s.list);
+        this.http.getUsers().subscribe(s => {
+            const normalizedData = normalizeUsers(s);
             const users = normalizedData.entities.users;
             this.ngRedux.dispatch({ type: 'users.addOrUpdate', payload: new ReduxTable({ list: users, ids: normalizedData.result }) });
         });

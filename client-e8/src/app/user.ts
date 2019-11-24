@@ -5,6 +5,5 @@ export class User {
 
     id: number;
     name: string;
-    picture: string;
-    posts: number[] = [];
+    posts: number[];
 }
