@@ -13,7 +13,7 @@
             <td>{{item.id}}</td>
             <td>{{item.name}}</td>
             <td><input ref-name type="text" [ngModel]="item.name"></td>
-            <td>{{item.picture}}</td>
+            <td><img src="{{item.avatar}}" alt="{{item.avatar}}" style="height: 40px;"></td>
             <td><button type="button" (click)="updateName(item.id, name.value)">update name</button></td>
         </tr>
     </tbody>
