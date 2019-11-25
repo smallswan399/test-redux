@@ -1,18 +1,4 @@
-<button (click)="clickHandler()">Click 1</button>
-<button (click)="update()">Update</button>
+<button (click)="update()">update</button>
+<button (click)="replace()">replace</button>
 
-
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>id</th>
-      <th>name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of tests">
-      <td>{{item.id}}</td>
-      <td>{{item.name}}</td>
-    </tr>
-  </tbody>
-</table>
+<app-test-item *ngFor="let item of tests" [item]="item"></app-test-item>

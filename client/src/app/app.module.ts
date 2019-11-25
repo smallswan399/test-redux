@@ -15,6 +15,7 @@ import { UserComponent } from './users/user/user.component';
 import { PostListComponent } from './users/user/post-list/post-list.component';
 import { PostComponent } from './users/user/post-list/post/post.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { TestItemComponent } from './tests/test-item/test-item.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     UsersComponent,
     UserComponent,
     PostListComponent,
-    PostComponent
+    PostComponent,
+    TestItemComponent
   ],
   imports: [
     BrowserModule,

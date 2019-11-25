@@ -18,53 +18,24 @@ export class TestsComponent implements OnInit {
   constructor(private ngRedux: NgRedux<IAppState>) { }
 
   ngOnInit() {
-    this.ngRedux.select((state: IAppState) => state.entities.tests.list).subscribe(t => {
-      console.log('the list changed');
-      this.tests = <Test[]> _.values(t);
-    });
-
-    this.ngRedux.select((state: IAppState) => state.entities.tests.list[1]).subscribe(t => {
-      if (t) {
-        console.log('id = 1 changed');
-      }
-    });
-
-    this.ngRedux.select((state: IAppState) => state.entities.tests.list[2]).subscribe(t => {
-      if (t) {
-        console.log('id = 2 changed');
-      }
-    });
-  }
-
-  clickHandler() {
-    this.id++;
-    const data = normalizeTest(new Test({id: this.id, name: Date().toString()}));
-    const tests = data.entities.tests;
-    this.ngRedux.dispatch({
-      type: 'add_tests',
-      payload: new ReduxTable({
-        ids: Object.keys(tests).map(s => +s),
-        list: tests
-      })
-    });
+    this.tests = [
+      {id: 1, name: 'abc'},
+      {id: 2, name: 'xyz'},
+      {id: 3, name: 'zzzz'},
+      {id: 4, name: 'vip'},
+    ];
   }
 
   update() {
-    const testO = new Test({
-      id: 2,
-      name: 'super mario'
-    });
+    this.tests[0].id = this.tests[0].id + 1;
+    this.tests[0].name = this.tests[0].id.toString();
+  }
 
-    const data = normalizeTest(testO);
-    const tests = data.entities.tests;
-
-    this.ngRedux.dispatch({
-      type: 'add_or_update_tests',
-      payload: new ReduxTable({
-        ids: Object.keys(tests).map(s => +s),
-        list: tests
-      })
-    });
+  replace() {
+    this.tests[0] = {
+      id: 2000,
+      name: '2000000'
+    };
   }
 
 }
