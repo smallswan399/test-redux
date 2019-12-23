@@ -20,11 +20,11 @@ export class UserQueryService {
     constructor(private ngRedux: NgRedux<IAppState>) { }
 
     getUsers(): Observable<User[]> {
-        return this.Users$.pipe(map(s => Object.values(s)));
+        return this.Users$.pipe(map(s => Object.values(s).map((t: any) => {return {...t}})));
     }
 
     getPosts(): Observable<Post[]> {
-        return this.Posts$.pipe(map(s => Object.values(s)));
+        return this.Posts$.pipe(map(s => Object.values(s).map((t: any) => {return {...t}})));
     }
 
     getPostsByUserId(userId: string) {
