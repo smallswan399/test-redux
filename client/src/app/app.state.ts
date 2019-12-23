@@ -14,23 +14,23 @@ export class ReduxTable<T> {
 const users = (state: ReduxTable<string>, action) => {
     switch (action.type) {
         case 'users.add':
-          return myAddMergeNumber(state, action);
+            return myAddMergeNumber(state, action);
         case 'users.addOrUpdate':
-          return myMerge(state, action);
+            return myMerge(state, action);
         default:
-          return state;
-      }
+            return state;
+    }
 };
 
 const posts = (state: ReduxTable<string>, action) => {
     switch (action.type) {
         case 'posts.add':
-          return myAddMergeNumber(state, action);
+            return myAddMergeNumber(state, action);
         case 'posts.addOrUpdate':
-          return myMerge(state, action);
+            return myMerge(state, action);
         default:
-          return state;
-      }
+            return state;
+    }
 };
 
 export interface IEntities {
@@ -56,23 +56,23 @@ export const INITIAL_STATE: IAppState = {
 const tests = (state: ReduxTable<string>, action) => {
     switch (action.type) {
         case 'tests.add':
-          return myAddMergeNumber(state, action);
+            return myAddMergeNumber(state, action);
         case 'tests.addOrUpdate':
-          return myMerge(state, action);
+            return myMerge(state, action);
         default:
-          return state;
-      }
+            return state;
+    }
 };
 
 const products = (state: ReduxTable<string>, action) => {
     switch (action.type) {
         case 'products.add':
-          return myAddMergeNumber(state, action);
+            return myAddMergeNumber(state, action);
         case 'products.addOrUpdate':
-          return myMerge(state, action);
+            return myMerge(state, action);
         default:
-          return state;
-      }
+            return state;
+    }
 };
 
 export function rootReducer(state: IAppState, action): IAppState {
