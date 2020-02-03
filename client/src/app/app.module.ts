@@ -16,6 +16,7 @@ import { PostListComponent } from './users/user/post-list/post-list.component';
 import { PostComponent } from './users/user/post-list/post/post.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { TestItemComponent } from './tests/test-item/test-item.component';
+import { TestEventHooksComponent } from './test-event-hooks/test-event-hooks.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { TestItemComponent } from './tests/test-item/test-item.component';
     UserComponent,
     PostListComponent,
     PostComponent,
-    TestItemComponent
+    TestItemComponent,
+    TestEventHooksComponent
   ],
   imports: [
     BrowserModule,

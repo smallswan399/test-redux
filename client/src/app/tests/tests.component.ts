@@ -26,6 +26,9 @@ export class TestsComponent implements OnInit {
     ];
   }
 
+  ngDoCheck() {
+    console.log('run ngDoCheck');
+  }
   update() {
     this.tests[0].id = this.tests[0].id + 1;
     this.tests[0].name = this.tests[0].id.toString();
